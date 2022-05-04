@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BIO BAZAAR</title>
+    <style>
+      th,
+      td {
+        width: 100px;
+        border: 1px solid black;
+        text-align: center;
+        /* padding: 5px; */
+        border-color: #96d4d4;
+        background-color: aquamarine;
+      }
+      table {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .container {
+        text-align: center;
+      }
+      .t-head {
+        height: 30px;
+      }
+      .create-user-btn {
+        color: #188181;
+      }
+      .h-title {
+        color: #188181;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .lable-class{
+        color: #188181;
+        background: #96d4d4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="h-title">BIO BAZAAR</h1>
+      <label class="lable-class" >Enter Name</label>
+      <input
+        
+        id="input-name"
+        placeholder="enter your name"
+        required
+      />
+      <button onclick="createUser()" class="create-user-btn">
+        Create New User
+      </button>
+      <br /><br />
+      <table>
+        <thead>
+          <tr class="t-head">
+            <td>Id</td>
+            <td>Name</td>
+            <td>Image</td>
+            <td></td>
+            <td>Resolve</td>
+          </tr>
+        </thead>
+      </table>
+      <br />
+      <table>
+        <% unapprovedUser.forEach(x => { %>
+        <tr>
+          <td><%= x.id %></td>
+          <td><%= x.name %></td>
+          <td>
+            <img
+              src="https://img.icons8.com/bubbles/50/000000/user.png"
+              height="25"
+            />
+          </td>
+          <td></td>
+          <td><button id=<% x.id %>  onclick="fucntion approveRequest(this.id)">approve</button></td>
+        </tr>
+        <%})%>
+      </table>
+      <br />
+      <table>
+        <% approvedUser.forEach(x => { %>
+        <tr>
+          <td><%= x.id %></td>
+          <td><%= x.name %></td>
+          <td>
+            <img
+              src="https://img.icons8.com/bubbles/50/000000/user.png"
+              height="25"
+            />
+          </td>
+          <td></td>
+          <td><button disabled>approved</button></td>
+        </tr>
+        <%})%>
+      </table>
+    </div>
+
+    <script>
+      function createUser() {
+        const inputElement = document.getElementById("input-name");
+        const name = inputElement.value;
+        console.log(name);
+        if (name.length==0){
+            return
+        }
+        const reqBody = JSON.stringify({ name: name });
+        console.log(reqBody);
+        const options = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: reqBody,
+        };
+
+        const request = async () => {
+          const response = await fetch("/users/create", options);
+          const data = await response.json();
+          console.log(data);
+        };
+        request();
+        document.location.reload();
+      }
+
+      function approveRequest(id) {
+        console.log(`request for approving id ${id}`);
+        const reqBody = JSON.stringify({ id });
+        console.log(reqBody);
+        const options = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: reqBody,
+        };
+
+        const request = async () => {
+          const response = await fetch("/users/approved", options);
+          const data = await response.json();
+          console.log(data);
+        };
+        request();
+        document.location.reload();
+      }
+    </script>
+  </body>
+</html>
