@@ -13,7 +13,7 @@
         text-align: center;
         /* padding: 5px; */
         border-color: #96d4d4;
-        background-color: aquamarine;
+        background-color: #d9fff2;
       }
       table {
         margin-left: auto;
@@ -65,25 +65,30 @@
       </table>
       <br />
       <table>
-        <% unapprovedUser.forEach(x => { %>
-        <tr>
-          <td><%= x.id %></td>
-          <td><%= x.name %></td>
-          <td>
-            <img
-              src="https://img.icons8.com/bubbles/50/000000/user.png"
-              height="25"
-            />
-          </td>
-          <td></td>
-          <td><button id=<% x.id %>  onclick="fucntion approveRequest(this.id)">approve</button></td>
-        </tr>
+        <% userList.forEach(x => { %>
+          <% if (!x.isApprove){%>
+
+            <tr>
+              <td><%= x.id %></td>
+              <td><%= x.name %></td>
+              <td>
+                <img
+                src="https://img.icons8.com/bubbles/50/000000/user.png"
+                height="25"
+                />
+              </td>
+              <td></td>
+              <td><button id=<%= x.id %> onclick="approveRequest(this.id)" >approve</button></td>
+            </tr>
+            <%}%>
         <%})%>
       </table>
       <br />
       <table>
-        <% approvedUser.forEach(x => { %>
+        <% userList.forEach(x => { %>
+          <% if (x.isApprove){%>
         <tr>
+
           <td><%= x.id %></td>
           <td><%= x.name %></td>
           <td>
@@ -95,6 +100,7 @@
           <td></td>
           <td><button disabled>approved</button></td>
         </tr>
+        <%}%>
         <%})%>
       </table>
     </div>
@@ -123,7 +129,6 @@
         request();
         document.location.reload();
       }
-
       function approveRequest(id) {
         console.log(`request for approving id ${id}`);
         const reqBody = JSON.stringify({ id });
