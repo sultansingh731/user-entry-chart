@@ -1,2 +1,4 @@
 node_modules
 package-lock.json
+font-end/node_modules
+front-end/build

@@ -47,9 +47,7 @@
         color: var(--blue);
       }
     </style>
-    <style>
-      
-    </style>
+
   </head>
   <body>
     <div class="container">
@@ -142,6 +140,7 @@
         request();
         document.location.reload();
       }
+      
       function approveRequest(id) {
         console.log(`request for approving id ${id}`);
         const reqBody = JSON.stringify({ id });

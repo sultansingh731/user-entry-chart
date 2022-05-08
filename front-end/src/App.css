@@ -1,0 +1,48 @@
+:root {
+  --blue: #1e90ff;
+  --pink: #e78ea9;
+  --green: #b9f8d3;
+}
+th,
+td {
+  width: 100px;
+  border: 1px solid black;
+  text-align: center;
+  /* padding: 5px; */
+  border-color: var(--blue);
+  background-color: #ccffe198;
+  font-family: "Times New Roman", Times, serif;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.container {
+  text-align: center;
+}
+.t-head {
+  height: 30px;
+}
+.t-data{
+  width: 100px;
+  border: 1px solid black;
+  text-align: center;
+  /* padding: 5px; */
+  border-color: var(--blue);
+  background-color: #ccffe198;
+  font-family: "Times New Roman", Times, serif;
+font-weight: bold;
+}
+.create-user-btn {
+  color: black;
+  border-radius: 0px;
+  border-color: var(--pink);
+  border-radius: 5px;
+}
+.h-title {
+  color: skyblue;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.lable-class {
+  color: var(--blue);
+}
