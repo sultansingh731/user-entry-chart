@@ -27,7 +27,6 @@ app.post("/users/create", async (req, res) => {
     const userName = req.body.name
     const userCount = await User.count()
     const userId = userCount + 1
-    userCount++
     const user = {
         name: userName,
         id: userId,

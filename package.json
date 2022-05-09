@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "server": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"cd front-end && npm start\""
   },
-  "author": "",
+  "author": "@sultansingh731",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
