@@ -1,41 +1,6 @@
-import { useState } from "react";
 import React from "react";
 import "./App.css";
 import axios from "axios";
-
-function Header() {
-  const [getName, setName] = useState("");
-
-  const changeHandler = (e) => {
-    let nameValue = e.target.value;
-    setName(nameValue);
-  };
-  const createUser = async (name) => {
-    console.log(name);
-    if (name.length === 0) {
-      return;
-    }
-    await axios.post("/users/create", { name });
-  };
-
-  return (
-    <>
-      <h1 className="h-title">BIO BAZAAR</h1>
-      <label className="lable-class">Enter Name</label>
-      <input
-        id="input-name"
-        placeholder="enter your name"
-        value={getName}
-        onChange={changeHandler}
-      />
-      <button onClick={() => createUser()} className="create-user-btn">
-        Create New User
-      </button>
-      <br />
-      <br />
-    </>
-  );
-}
 
 class Row extends React.Component {
   approveRequest = async (id) => {
@@ -71,16 +36,15 @@ class Row extends React.Component {
 }
 
 class Table extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      userList: [],
-    };
-  }
+  state = {
+    userList: [],
+  };
   componentDidMount() {
     this.requestUsers();
+    this.requestUsers.bind(this);
+    this.props.setRequestUser(this.requestUsers);
   }
-  requestUsers() {
+  requestUsers = () => {
     axios
       .get("/users/")
       // .then((res)=> console.log(res))
@@ -89,7 +53,7 @@ class Table extends React.Component {
           userList: res.data.userList,
         });
       });
-  }
+  };
 
   render() {
     return (
@@ -132,15 +96,54 @@ class Table extends React.Component {
   }
 }
 
-function App() {
-  return (
-    <>
-      <div className="container">
-        <Header />
-        <Table />
-      </div>
-    </>
-  );
+class App extends React.Component {
+  state = {
+    requestUsers: () => {},
+    name: "",
+  };
+
+  setRequestUser = (func1) => {
+    this.setState({ requestUsers: func1 });
+  };
+  changeHandler = (e) => {
+    let nameValue = e.target.value;
+    this.setState({ name: nameValue });
+  };
+  createUser = async (name) => {
+    console.log(name);
+    if (name.length === 0) {
+      return;
+    }
+    axios.post("/users/create", { name }).then(() => this.state.requestUsers());
+  };
+  render() {
+    return (
+      <>
+        <div className="container">
+          <h1 className="h-title">BIO BAZAAR</h1>
+          <div className="flex-item header-wrapper">
+            <label className="lable-class">Enter Name</label>&nbsp;&nbsp;&nbsp;
+            <input
+              id="input-name"
+              placeholder="enter your name"
+              value={this.state.name}
+              onChange={this.changeHandler}
+            />&nbsp;&nbsp;&nbsp;
+            <button
+              onClick={() => this.createUser(this.state.name)}
+              className="create-user-btn"
+            >
+              Create New User
+            </button>
+          </div>
+
+          <br />
+          <br />
+          <Table setRequestUser={(fun1) => this.setRequestUser(fun1)} />
+        </div>
+      </>
+    );
+  }
 }
 
 export default App;
