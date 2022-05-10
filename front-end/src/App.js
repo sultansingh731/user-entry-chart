@@ -114,7 +114,10 @@ class App extends React.Component {
     if (name.length === 0) {
       return;
     }
-    axios.post("/users/create", { name }).then(() => this.state.requestUsers());
+    axios.post("/users/create", { name }).then(() => {
+      this.state.requestUsers()
+      this.setState({name:""})
+    });
   };
   render() {
     return (
