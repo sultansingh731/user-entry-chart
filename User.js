@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+// this contains id, name, isApprove
 const UserSchema = new mongoose.Schema({
     id: Number,
     name: String,
